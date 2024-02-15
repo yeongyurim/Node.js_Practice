@@ -6,10 +6,16 @@ var http = require('http');
 http.createServer(function(request, response) {
   if (request.method == 'GET') {
     // get Request
-    fs.
-    console.log('GET 요청입니다.');
+    fs.readFile('HTMLPage.2.html', function (error, data) {
+      response.writeHead(200 , {'Content-Type': 'text/html'});
+      response.end(data);
+    });
   } else if (request.method == 'POST') {
-    console.log('POST 요청입니다.');
+    // post request
+    request.on('data', function (data) {
+      response.writeHead(200 , { 'Content-Type': 'text/html'});
+      response.end('<h1>' + data + '</h1>');
+    });
   }
 }).listen(52273, function () {
   console.log('Server Running at http://127.0.0.1:52273');
